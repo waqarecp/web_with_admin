@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use Auth;
 
 
@@ -60,5 +61,46 @@ Auth::routes();
 //Route::get('/home', [HomeController::class, 'home'])->name('home');
 
 //Route::prefix('admin/')->group(function () {
-    Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+    // Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
 //});
+
+// Route::get('/', [AdminController::class,'index']);
+
+Route::prefix('admin')->group(function () {
+
+    Route::get('/', [AdminController::class,'index']);
+    Route::get('/alerts', [AdminController::class,'alerts']);
+    Route::get('/accordion', [AdminController::class,'accordion']);
+    Route::get('/badges', [AdminController::class,'badges']);
+    Route::get('/breadcrumbs', [AdminController::class,'breadcrumbs']);
+    Route::get('/buttons', [AdminController::class,'buttons']);
+    Route::get('/cards', [AdminController::class,'cards']);
+    Route::get('/carousel', [AdminController::class,'carousel']);
+    Route::get('/group', [AdminController::class,'group']);
+    Route::get('/modal', [AdminController::class,'modal']);
+    Route::get('/tabs', [AdminController::class,'tabs']);
+    Route::get('/pagination', [AdminController::class,'pagination']);
+    Route::get('/progress', [AdminController::class,'progress']);
+    Route::get('/spinners', [AdminController::class,'spinners']);
+    Route::get('/tooltips', [AdminController::class,'tooltips']);
+    Route::get('/forms-elements', [AdminController::class,'forms_elements']);
+    Route::get('/forms-layouts', [AdminController::class,'forms_layouts']);
+    Route::get('/forms-editors', [AdminController::class,'forms_editors']);
+    Route::get('/forms-validation', [AdminController::class,'forms_validation']);
+    Route::get('/forms-validation', [AdminController::class,'forms_validation']);
+    Route::get('/tables-general', [AdminController::class,'tables_general']);
+    Route::get('/tables-data', [AdminController::class,'tables_data']);
+    Route::get('/charts-chartjs', [AdminController::class,'charts_chartjs']);
+    Route::get('/charts-apexcharts', [AdminController::class,'charts_apexcharts']);
+    Route::get('/charts-echarts', [AdminController::class,'charts_echarts']);
+    Route::get('/icons-bootstrap', [AdminController::class,'icons_bootstrap']);
+    Route::get('/icons-remix', [AdminController::class,'icons_remix']);
+    Route::get('/icons-boxicons', [AdminController::class,'icons_boxicons']);
+    Route::get('/users-profile', [AdminController::class,'users_profile']);
+    Route::get('/faq', [AdminController::class,'faq']);
+    Route::get('/contact', [AdminController::class,'contact']);
+    Route::get('/register', [AdminController::class,'register']);
+    Route::get('/login', [AdminController::class,'login']);
+    Route::get('/404', [AdminController::class,'NotFound']);
+    Route::get('/blank', [AdminController::class,'blank']);
+});
