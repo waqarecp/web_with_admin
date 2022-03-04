@@ -30,9 +30,9 @@
                 @endif
 
                 @if (Route::has('register'))
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li> -->
+                    <!-- <li class="nav-item"> -->
+                        <a class="btn btn-info py-2 px-4 ms-1" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    <!-- </li> -->
                 @endif
             @else
             <div class="nav-item dropdown">

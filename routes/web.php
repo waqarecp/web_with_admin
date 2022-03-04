@@ -7,7 +7,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
 use Auth;
 
 
@@ -58,17 +57,18 @@ Route::delete('remove-from-cart', [CartController::class,'removeFromCart']);
 
 Auth::routes();
 
-//Route::get('/home', [HomeController::class, 'home'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //Route::prefix('admin/')->group(function () {
     // Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
 //});
 
-// Route::get('/', [AdminController::class,'index']);
+
 
 Route::prefix('admin')->group(function () {
 
-    Route::get('/', [AdminController::class,'index']);
+    Route::get('/', [AdminController::class,'index'])->name('admin.home')->middleware('is_admin');
+    ;
     Route::get('/alerts', [AdminController::class,'alerts']);
     Route::get('/accordion', [AdminController::class,'accordion']);
     Route::get('/badges', [AdminController::class,'badges']);
