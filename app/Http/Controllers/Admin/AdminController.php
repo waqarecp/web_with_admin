@@ -12,6 +12,11 @@ class AdminController extends Controller
       
         return view('admin.index');
     }   
+    public function view_products()
+    {
+      
+        return view('admin.products.view_products');
+    } 
     public function alerts()
     {
       
