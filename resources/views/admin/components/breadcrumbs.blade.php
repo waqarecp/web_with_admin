@@ -1,5 +1,5 @@
 
-@extends('adminLayout.app');
+@extends('admin.layouts.app');
 
 @section('content')
     <div class="pagetitle">

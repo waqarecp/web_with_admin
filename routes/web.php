@@ -3,7 +3,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
+// use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use Illuminate\Http\Request;
@@ -48,7 +51,7 @@ Route::get('price', function () {
 });
 
 
-Route::resource('products', ProductController::class);
+
 
 
 Route::get('cart', [CartController::class,'index']);
@@ -65,6 +68,13 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
     // Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
 //});
 
+Route::prefix('customer')->group(function () {
+
+Route::get('/', [CustomerController::class,'index'])->name('customer.home');
+    ;
+Route::get('/profile', [CustomerController::class,'profile']);
+
+});
 
 
 Route::prefix('admin')->group(function () {
@@ -105,4 +115,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class,'login']);
     Route::get('/404', [AdminController::class,'NotFound']);
     Route::get('/blank', [AdminController::class,'blank']);
+
+    Route::resource('products', ProductController::class);
+
+
 });

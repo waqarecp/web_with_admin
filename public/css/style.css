@@ -5,6 +5,9 @@
     --light: #EEF9FF;
     --dark: #091E3E;
 }
+.right{
+    float: right;
+}
 
 h1,
 h2,
