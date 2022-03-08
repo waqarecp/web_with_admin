@@ -14,9 +14,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(5);
-        return view('web.products', compact('products'))
-        ->with('i', (request()->input('page', 1) -1) * 5);
+        $products = Product::all();
+        // $products = Product::latest()->paginate(30);
+     
+        return view('admin.products.index', compact('products'));
+        // ->with('i', (request()->input('page', 1) -1) * 5);
     }
 
     /**
@@ -60,6 +62,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
+        echo "fdfdfsf";exit;
     }
 
     /**

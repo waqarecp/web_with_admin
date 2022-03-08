@@ -11,6 +11,9 @@
 :root {
   scroll-behavior: smooth;
 }
+.right{
+  float: right;
+}
 
 body {
   font-family: "Open Sans", sans-serif;
