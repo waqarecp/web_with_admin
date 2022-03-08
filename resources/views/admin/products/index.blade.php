@@ -30,56 +30,47 @@
 
               <!-- Table with stripped rows -->
               <!-- datatable -->
-              <table class="table ">
+              <table class="table table-bordered table-responsive user_datatable ">
                 <thead>
                 <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th>description</th>
+                <th>Description</th>
                 <th>Price</th>
-                <th>Date Created</th>
-                <th>Actions</th>
+                <!-- <th>Date Created</th> -->
+                <th style="width: 10%">Actions</th>
                </tr>
                 </thead>
                 <tbody>
-                @foreach ($products as $product)
-            <tr>
-                <td>{{$product->id}}</td>
-                <td>{{$product->name}}</td>
-                <td>{{$product->description}}</td>
-                <td>{{$product->price}}</td>
-                <td>{{$product->created_at}}</td>
-                <td>
-                    <form action="{{ url('admin/products/' . $product->id) }}" method="POST">
-
-                        <a href="{{ url('admin/products/' . $product->id) }}" title="show">
-                          <i class="fas fa-eye text-success"></i>
-                        </a>
-
-                        <a href="{{ url('admin/products/' .$product->id. '/edit') }}">
-                            <i class="fas fa-edit"></i>
-                        </a>
-
-                        @csrf
-                        @method('DELETE')
-
-                        <button type="submit" title="delete" style="border: none; background-color:transparent;">
-                            <i class="fas fa-trash  text-danger"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
+      
                 </tbody>
               </table>
              
               <!-- End Table with stripped rows -->
 
             </div>
-            {{ $products->links() }}
+    
           </div>
 
         </div>
       </div>
     </section>
+    <script type="text/javascript">
+  $(function () {
+    var table = $('.user_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('products.index') }}",
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'},
+            {data: 'description', name: 'description'},
+            {data: 'price', name: 'price'},
+            // {data: 'created_at', name: 'created_at'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+    });
+  });
+</script>
     @endsection
+

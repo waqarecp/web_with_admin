@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use DataTables;
 
 class ProductController extends Controller
 {
@@ -12,11 +13,37 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(2);
+        // $products = Product::paginate(20);
 
-        return view('admin.products.index', compact('products'));
+        if ($request->ajax()) {
+            $data = Product::get();
+            return Datatables::of($data)->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $btn = '<form action="'.url('admin/products/' . $row->id).'" method="POST">
+                    <a href="'.url("admin/products/" . $row->id).'" title="show">
+                      <i class="fas fa-eye text-success"></i>
+                    </a>
+
+                    <a href="'.url("admin/products/" .$row->id. "/edit").'">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    
+                    <input type="hidden" name="_token" value="' . csrf_token() . '">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" title="delete" style="border: none; background-color:transparent;">
+                    <i class="fas fa-trash  text-danger"></i>
+                 </button>
+                    </form>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.products.index');
+        // return view('admin.products.index', compact('products'));
             // ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
