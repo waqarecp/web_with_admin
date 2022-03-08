@@ -10,12 +10,12 @@
         </a>
       </li><!-- End Dashboard Nav -->  
       
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="{{ url('admin/products') }}">
           <i class="bi bi-person"></i>
           <span>Products</span>
         </a>
-      </li>    
+      </li>     -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ url('chatify') }}">
           <i class="bi bi-person"></i>
@@ -36,7 +36,7 @@
         </a>
         <ul id="products-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ url('admin/view-products') }}">
+            <a href="{{ url('admin/products') }}">
               <i class="bi bi-circle"></i><span>View Products</span>
             </a>
           </li>
