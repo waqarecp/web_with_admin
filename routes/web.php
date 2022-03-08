@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Auth;
@@ -54,6 +55,7 @@ Route::get('cart', [CartController::class,'index']);
 Route::get('add-to-cart/{id}', [CartController::class,'addToCart']);
 Route::patch('update-cart', [CartController::class,'updateCart']);
 Route::delete('remove-from-cart', [CartController::class,'removeFromCart']);
+Route::get('checkout', [CheckoutController::class,'checkout']);
 
 Auth::routes();
 
@@ -68,7 +70,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::prefix('admin')->group(function () {
 
     Route::get('/', [AdminController::class,'index'])->name('admin.home')->middleware('is_admin');
-    ;
+    Route::get('/view-products', [AdminController::class,'view_products']);
     Route::get('/alerts', [AdminController::class,'alerts']);
     Route::get('/accordion', [AdminController::class,'accordion']);
     Route::get('/badges', [AdminController::class,'badges']);

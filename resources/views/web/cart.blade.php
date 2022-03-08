@@ -21,7 +21,7 @@
 
     <!-- Pricing Start -->
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container products">
+    <div class="container products mb-5">
         <div class="row">
         @if(session('cart'))
         @php $total = 0 @endphp
@@ -64,10 +64,61 @@
                 <td><a href="{{ url('products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                 <td colspan="2" class="hidden-xs"></td>
                 <td class="hidden-xs text-center"><strong>Total {{ $total }}</strong></td>
-                <td></td>
+                <td><a href="{{ url('checkout') }}" class="btn btn-sm btn-success"><i class="fa fa-check-circle"></i> Checkout</a></td>
             </tr>
             </tfoot>
         </table>
+        <section id="do_action">
+            <div class="container">
+                <div class="heading">
+                    <h3>What would you like to do next?</h3>
+                    <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div>
+                            <table id="coupon" class="table">
+                                <tr>
+                                    <td colspan="2"><h5>Use Coupon Code</h5></td>
+                                    <td width="10%"></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="coupon_code form-control" type="text" name="coupon" placeholder="Enter Coupon Code" value=""></td>
+                                    <td><a style="margin-top: 0px" class="btn btn-primary update btn_apply_coupon" href="javascript:void(0)" onclick="check_coupon();">Apply</a></td>
+                                </tr>
+                                <tr class="d-none">
+                                    <td class="tr_coupon_message" colspan="2">
+                                        <div class="coupon_result"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="total_area">
+                            <table id="coupon" class="table table-bordered">
+                                <tr>
+                                    <td colspan="2"><h6>Cart Total</h6></td>
+                                    <td width="10%"><span class="cart_total">1,200.00</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><h6>Discount Amount</h6></td>
+                                    <td width="10%"><span class="discount_amount">10.00</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><h6>Shipping Cost</h6></td>
+                                    <td width="10%"><span class="shipping_cost">Free</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><h6>Net Total</h6></td>
+                                    <td width="10%"><span class="cart_total">1,190.00</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         @else
         <div class="alert alert-warning" role="alert">
             <h4 class="alert-heading">Empty Cart!</h4>
