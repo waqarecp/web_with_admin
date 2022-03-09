@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -14,10 +15,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        // $products = Product::latest()->paginate(30);
+        //$products = Product::all();
+        $products = Product::latest()->paginate(2);
      
-        return view('admin.products.index', compact('products'));
+        return view('web.products', compact('products'));
         // ->with('i', (request()->input('page', 1) -1) * 5);
     }
 
