@@ -50,6 +50,7 @@
               
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary">Update</button>
+                  <a class="btn btn-primary" href="{{ url('admin/products') }}">Cancel</a>
                   <!-- <button type="reset" class="btn btn-secondary">Reset</button> -->
                 </div>
               </form><!-- Vertical Form -->

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Auth;
@@ -24,59 +25,75 @@ use Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => ['guest']], function() {
 
-Route::get('/', function () {
-    return view('web.index');
+    Route::get('/', function () {
+        return view('web.index');
+    });
+    Route::get('about', function () {
+        return view('web.about');
+    });
+    Route::get('services', function () {
+        return view('web.services');
+    });
+    Route::get('team', function () {
+        return view('web.team');
+    });
+    Route::get('testimonials', function () {
+        return view('web.testimonials');
+    });
+    Route::get('appointment', function () {
+        return view('web.appointment');
+    });
+    Route::get('contact', function () {
+        return view('web.contact');
+    });
+    Route::get('price', function () {
+        return view('web.price');
+    });
+
+    Route::get('cart', [CartController::class,'index']);
+    Route::get('add-to-cart/{id}', [CartController::class,'addToCart']);
+    Route::patch('update-cart', [CartController::class,'updateCart']);
+    Route::delete('remove-from-cart', [CartController::class,'removeFromCart']);
+    Route::get('checkout', [CheckoutController::class,'checkout']);
+
 });
-Route::get('about', function () {
-    return view('web.about');
-});
-Route::get('services', function () {
-    return view('web.services');
-});
-Route::get('team', function () {
-    return view('web.team');
-});
-Route::get('testimonials', function () {
-    return view('web.testimonials');
-});
-Route::get('appointment', function () {
-    return view('web.appointment');
-});
-Route::get('contact', function () {
-    return view('web.contact');
-});
-Route::get('price', function () {
-    return view('web.price');
+Route::group(['middleware' => ['auth', 'permission']], function() {
+
+         /**
+         * User Routes
+         */
+        Route::group(['prefix' => 'users'], function() {
+            Route::get('/', [UsersController::class,'index'])->name('users.index');
+            Route::get('/create', [UsersController::class,'create'])->name('users.create');
+            Route::post('/create', [UsersController::class,'store'])->name('users.store');
+            Route::get('/{user}/show', [UsersController::class,'show'])->name('users.show');
+            Route::get('/{user}/edit', [UsersController::class,'edit'])->name('users.edit');
+            Route::patch('/{user}/update', [UsersController::class,'update'])->name('users.update');
+            Route::delete('/{user}/delete', [UsersController::class,'destroy'])->name('users.destroy');
+        });
+
+                /**
+         * Post Routes
+         */
+        Route::group(['prefix' => 'posts'], function() {
+            Route::get('/', 'PostsController@index')->name('posts.index');
+            Route::get('/create', 'PostsController@create')->name('posts.create');
+            Route::post('/create', 'PostsController@store')->name('posts.store');
+            Route::get('/{post}/show', 'PostsController@show')->name('posts.show');
+            Route::get('/{post}/edit', 'PostsController@edit')->name('posts.edit');
+            Route::patch('/{post}/update', 'PostsController@update')->name('posts.update');
+            Route::delete('/{post}/delete', 'PostsController@destroy')->name('posts.destroy');
+        });
+
+    Route::resource('roles', RolesController::class);
+    Route::resource('permissions', PermissionsController::class);
 });
 
 
-
-
-
-Route::get('cart', [CartController::class,'index']);
-Route::get('add-to-cart/{id}', [CartController::class,'addToCart']);
-Route::patch('update-cart', [CartController::class,'updateCart']);
-Route::delete('remove-from-cart', [CartController::class,'removeFromCart']);
-Route::get('checkout', [CheckoutController::class,'checkout']);
 
 Auth::routes();
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-//Route::prefix('admin/')->group(function () {
-    // Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
-//});
-
-Route::prefix('customer')->group(function () {
-
-Route::get('/', [CustomerController::class,'index'])->name('customer.home');
-    ;
-Route::get('/profile', [CustomerController::class,'profile']);
-
-});
-
-
 Route::prefix('admin')->group(function () {
 
     Route::get('/', [AdminController::class,'index'])->name('admin.home')->middleware('is_admin');
@@ -115,8 +132,29 @@ Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class,'login']);
     Route::get('/404', [AdminController::class,'NotFound']);
     Route::get('/blank', [AdminController::class,'blank']);
-
-    Route::resource('products', ProductController::class);
-
-
+    Route::resource('products', ProductController::class); 
 });
+// admin routes end
+
+// customer routes
+Route::prefix('customer')->group(function () {
+
+    Route::get('/', [CustomerController::class,'index'])->name('customer.home');
+    Route::get('/profile', [CustomerController::class,'profile']);
+    
+    });
+
+// end custoemr routes
+
+
+
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+//Route::prefix('admin/')->group(function () {
+    // Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+//});
+
+
+
+
+
