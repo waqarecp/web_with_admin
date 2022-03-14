@@ -9,7 +9,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-      
+        // dd(auth()->user()->assignRole('admin'));
         return view('admin.index');
     }   
     public function view_products()

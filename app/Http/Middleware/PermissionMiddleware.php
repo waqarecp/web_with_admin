@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\UnauthorizedException;
+use Spatie\Permission\Models\Permission;
 
 class PermissionMiddleware
 {
@@ -16,8 +17,11 @@ class PermissionMiddleware
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle($request, Closure $next, $permission = null, $guard = null)
-    {
+    {   
+        // Permission::create(['name'=>'edit post']);
+        // auth()->user()->givePermissionTo('users.index');
         $authGuard = app('auth')->guard($guard);
+        // dd(auth()->user()->getPermissionsViaRoles());
 
         if ($authGuard->guest()) {
             throw UnauthorizedException::notLoggedIn();

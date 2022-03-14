@@ -13,38 +13,88 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+        
+        $this->ProductModel = new Product();
+
+    }
     public function index(Request $request)
     {
         // $products = Product::paginate(20);
 
-        if ($request->ajax()) {
-            $data = Product::get();
-            return Datatables::of($data)->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $btn = '<form action="'.url('admin/products/' . $row->id).'" method="POST">
-                    <a href="'.url("admin/products/" . $row->id).'" title="show">
-                      <i class="fas fa-eye text-success"></i>
-                    </a>
+        // if ($request->ajax()) {
+        //     $data = Product::get();
+        //     return Datatables::of($data)->addIndexColumn()
+        //         ->addColumn('action', function($row){
+        //             $btn = '<form action="'.url('admin/products/' . $row->id).'" method="POST">
+        //             <a href="'.url("admin/products/" . $row->id).'" title="show">
+        //               <i class="fas fa-eye text-success"></i>
+        //             </a>
 
-                    <a href="'.url("admin/products/" .$row->id. "/edit").'">
-                        <i class="fas fa-edit"></i>
-                    </a>
+        //             <a href="'.url("admin/products/" .$row->id. "/edit").'">
+        //                 <i class="fas fa-edit"></i>
+        //             </a>
                     
-                    <input type="hidden" name="_token" value="' . csrf_token() . '">
-                    <input type="hidden" name="_method" value="delete">
-                    <button type="submit" title="delete" style="border: none; background-color:transparent;">
-                    <i class="fas fa-trash  text-danger"></i>
-                 </button>
-                    </form>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
+        //             <input type="hidden" name="_token" value="' . csrf_token() . '">
+        //             <input type="hidden" name="_method" value="delete">
+        //             <button type="submit" title="delete" style="border: none; background-color:transparent;">
+        //             <i class="fas fa-trash  text-danger"></i>
+        //          </button>
+        //             </form>';
+        //             return $btn;
+        //         })
+        //         ->rawColumns(['action'])
+        //         ->make(true);
+        // }
 
         return view('admin.products.index');
         // return view('admin.products.index', compact('products'));
             // ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    public function getProducts(Request $request){
+        $data = array();
+        $activeNoaasList=$this->ProductModel->getAllProducts($request,'Normal');
+
+        // dd($activeNoaasList);
+        if(!empty($activeNoaasList))
+        {
+            foreach ($activeNoaasList as $list)
+            {
+                $nestedData['id'] = $list->id;
+                $nestedData['name'] = $list->name;
+                $nestedData['description'] = $list->description;
+                $nestedData['price'] = $list->price;
+                $nestedData['created_at'] = $list->created_at;
+                $btn = '<form action="'.url('admin/products/' . $list->id).'" method="POST">
+                            <a href="'.url("admin/products/" . $list->id).'" title="show">
+                              <i class="fas fa-eye text-success"></i>
+                            </a>
+        
+                            <a href="'.url("admin/products/" .$list->id. "/edit").'">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            
+                            <input type="hidden" name="_token" value="' . csrf_token() . '">
+                            <input type="hidden" name="_method" value="delete">
+                            <button type="submit" title="delete" style="border: none; background-color:transparent;">
+                            <i class="fas fa-trash  text-danger"></i>
+                         </button>
+                            </form>';
+                $nestedData['action'] = $btn;
+                $data[] = $nestedData;
+
+            }
+        }
+        $json_data = array(
+                    "draw"            => intval($request->input('draw')),
+                    "recordsTotal"    => $this->ProductModel->getAllProducts($request,'Counts'),
+                    "recordsFiltered" => $this->ProductModel->getAllProducts($request,'Filters'),
+                    "data"            => $data
+                    );
+        echo json_encode($json_data);
+
     }
 
     /**
