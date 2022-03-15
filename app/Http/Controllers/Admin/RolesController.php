@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Http\Controllers\Admin;
 use DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -27,7 +27,7 @@ class RolesController extends Controller
     public function index(Request $request)
     {   
         $roles = Role::orderBy('id','DESC')->paginate(5);
-        return view('roles.index',compact('roles'))
+        return view('admin.roles.index',compact('roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
     
@@ -39,7 +39,7 @@ class RolesController extends Controller
     public function create()
     {
         $permissions = Permission::get();
-        return view('roles.create', compact('permissions'));
+        return view('admin.roles.create', compact('permissions'));
     }
     
     /**
@@ -73,7 +73,7 @@ class RolesController extends Controller
         $role = $role;
         $rolePermissions = $role->permissions;
     
-        return view('roles.show', compact('role', 'rolePermissions'));
+        return view('admin.roles.show', compact('role', 'rolePermissions'));
     }
     
     /**
@@ -88,7 +88,7 @@ class RolesController extends Controller
         $rolePermissions = $role->permissions->pluck('name')->toArray();
         $permissions = Permission::get();
     
-        return view('roles.edit', compact('role', 'rolePermissions', 'permissions'));
+        return view('admin.roles.edit', compact('role', 'rolePermissions', 'permissions'));
     }
     
     /**
@@ -123,7 +123,7 @@ class RolesController extends Controller
     {
         $role->delete();
 
-        return redirect()->route('roles.index')
+        return redirect()->route('admin.roles.index')
                         ->with('success','Role deleted successfully');
     }
 }

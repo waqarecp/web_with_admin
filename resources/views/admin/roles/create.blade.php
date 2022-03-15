@@ -1,4 +1,4 @@
-@extends('layouts.app-master')
+@extends('admin.layouts.app')
 
 @section('content')
     <div class="bg-light p-4 rounded">
@@ -55,7 +55,7 @@
                 </table>
 
                 <button type="submit" class="btn btn-primary">Save user</button>
-                <a href="{{ route('users.index') }}" class="btn btn-default">Back</a>
+                <a href="{{ route('roles.index') }}" class="btn btn-default">Back</a>
             </form>
         </div>
 

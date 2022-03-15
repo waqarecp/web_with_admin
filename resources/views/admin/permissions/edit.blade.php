@@ -1,19 +1,20 @@
-@extends('layouts.app-master')
+@extends('admin.layouts.app')
 
 @section('content')
     <div class="bg-light p-4 rounded">
-        <h2>Add new permission</h2>
+        <h2>Edit permission</h2>
         <div class="lead">
-            Add new permission.
+            Editing permission.
         </div>
 
         <div class="container mt-4">
 
-            <form method="POST" action="{{ route('permissions.store') }}">
+            <form method="POST" action="{{ route('permissions.update', $permission->id) }}">
+                @method('patch')
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input value="{{ old('name') }}" 
+                    <input value="{{ $permission->name }}" 
                         type="text" 
                         class="form-control" 
                         name="name" 

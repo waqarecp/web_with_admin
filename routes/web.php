@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 // use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\CartController;
@@ -139,6 +141,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/404', [AdminController::class,'NotFound']);
     Route::get('/blank', [AdminController::class,'blank']);
     Route::resource('products', ProductController::class); 
+    Route::resource('roles', RolesController::class);
+    Route::resource('permissions', PermissionsController::class);
 });
 
 });

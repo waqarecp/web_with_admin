@@ -1,8 +1,8 @@
-@extends('layouts.app-master')
+@extends('admin.layouts.app')
 
 @section('content')
     
-    <h1 class="mb-3">Laravel 8 User Roles and Permissions Step by Step Tutorial - codeanddeploy.com</h1>
+    <h1 class="mb-3">Permissions</h1>
 
     <div class="bg-light p-4 rounded">
         <h2>Permissions</h2>

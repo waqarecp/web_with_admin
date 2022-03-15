@@ -21,6 +21,18 @@
           <i class="bi bi-person"></i>
           <span>Chat</span>
         </a>
+      </li>    
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ url('admin/roles') }}">
+          <i class="bi bi-person"></i>
+          <span>Roles</span>
+        </a>
+      </li>      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ url('admin/permissions') }}">
+          <i class="bi bi-person"></i>
+          <span>Permissions</span>
+        </a>
       </li>
 <!-- 
        <li class="nav-item">
