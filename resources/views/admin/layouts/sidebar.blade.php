@@ -40,11 +40,11 @@
               <i class="bi bi-circle"></i><span>View Products</span>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="">
               <i class="bi bi-circle"></i><span>---</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </li>
 
