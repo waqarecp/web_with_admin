@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\InvoicePaid;
 
 class RegisterController extends Controller
 {
@@ -63,11 +64,18 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        return User::create([
+    {  
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        $invoice = "test";
+
+        // $user= User::find(31);
+        // // dd($user);
+        // $user->notify(new InvoicePaid($invoice));
+        return $user;
+       
     }
 }

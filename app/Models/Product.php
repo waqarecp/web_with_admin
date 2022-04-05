@@ -24,7 +24,7 @@ class Product extends Model
     ];
 
     public function getAllProducts($request,$tag){
-        DB::enableQueryLog();
+        // DB::enableQueryLog();
         $getData = Product::select('*');
             if (!empty($request->search['value'])) {
                 

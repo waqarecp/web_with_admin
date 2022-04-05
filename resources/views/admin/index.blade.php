@@ -1,7 +1,5 @@
-@extends('admin.layouts.app');
-
+@extends('admin.layouts.app')
 @section('content')
-
 <div class="pagetitle">
       <h1>Dashboard</h1>
       <nav>

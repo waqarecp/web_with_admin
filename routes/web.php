@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Jobs\SendEmailJob;
 use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -100,11 +101,11 @@ Route::group(['middleware' => ['guest']], function() {
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth', 'role:admin']], function() {
+Route::group(['middleware' => ['auth', 'role:admin','is_admin']], function() {
 
 Route::prefix('admin')->group(function () {
 
-    Route::get('/', [AdminController::class,'index'])->name('admin.home')->middleware('is_admin');
+    Route::get('/', [AdminController::class,'index'])->name('admin.home');
     Route::get('/view-products', [AdminController::class,'view_products']);
     Route::post('/getproducts', [ProductController::class,'getProducts'])->name('products.get');
     Route::get('/alerts', [AdminController::class,'alerts']);
@@ -151,7 +152,7 @@ Route::prefix('admin')->group(function () {
 
 // customer routes
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth','is_customer']], function() {
 Route::prefix('customer')->group(function () {
 
     Route::get('/', [CustomerController::class,'index'])->name('customer.home');
@@ -166,4 +167,11 @@ Route::prefix('customer')->group(function () {
 
 
 
-
+Route::get('email-test', function(){
+  
+    $details['email'] = 'basit@dependibot.com';
+  
+    dispatch(new \App\Jobs\SendEmailJob($details));
+  
+    dd('done');
+});
